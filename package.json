@@ -1,0 +1,21 @@
+{
+  "name": "reflector",
+  "version": "0.1.0",
+  "description": "Reflector",
+  "engines": {
+    "node": "8.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^1.1.0",
+    "url": "^0.11.0"
+  },
+  "keywords": [
+    "node",
+    "heroku"
+  ],
+  "license": "MIT"
+}
