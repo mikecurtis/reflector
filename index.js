@@ -3,8 +3,6 @@
 const PORT = process.env.PORT || 5000;
 const express = require('express');
 const API_PREFIX = '/ifttt/v1';
-const ACTIONS_PREFIX = API_PREFIX + '/actions'
-const ACTIONS_PATTERN = ACTIONS_PREFIX + '/:action'
 
 function writeReply(res, sts, obj) {
 	res.status(sts);
@@ -15,15 +13,24 @@ function writeReply(res, sts, obj) {
 const server = express()
 	.use(express.static('static'))
 	.use('/', express.static('/static/index.html'))
-	.post(ACTIONS_PATTERN, function (req, res) {
+	// Status request.
+	.post(API_PREFIX + '/status', function (req, res) {
+		writeReply(res, 200, {});
+	})
+	// Action request.
+	.post(API_PREFIX + '/actions/:action', function (req, res) {
 		var action = req.params.action
 		wss.clients.forEach((client) => {
 			console.log('Forward command "' + action + '" to client: ' + client.id);
 			client.send(action);
 		});
-		writeReply(res, 200, {'data': {}});
-		// TODO: propagate errors back and handle error case
+		// TODO: propagate errors back and return.
 		// writeReply(res, 500, {'errors': [{'message': 'Blah!'}] });
+		writeReply(res, 200, {'data': {}});
+	})
+	// Test setup request.
+	.post(API_PREFIX + '/test/setup', function (req, res) {
+		writeReply(res, 200, {'data': {'samples': {'actions': {'test_command': {}}}}});
 	})
 	.listen(PORT, () => console.log('Listening on ' + PORT));
 
