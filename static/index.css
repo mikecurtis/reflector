@@ -1,0 +1,43 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+table {
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: center;
+}
+tr {
+  background-color:#ffffff;
+  text-align: center;
+  vertical-align: center;
+}
+th {
+  background-color:#bbbbff;
+  border: 0px;
+  padding: 2px;
+}
+td {
+  border: 0px;
+  padding: 1px;
+  text-align: center;
+  vertical-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+img {
+  border: 3px solid white;
+}
+img:hover {
+  border: 3px solid #dddddd;
+}
+img.highlight {
+  border: 3px solid #ff9999;
+}
+
+input, select {
+  border: 1px solid black;
+  height: 30px;
+}

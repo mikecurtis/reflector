@@ -1,0 +1,189 @@
+<html>
+<head>
+  <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link href="/index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id='top'></div>
+
+  <table>
+    <tr>
+      <td>
+        <table width=100%>
+          <tr>
+            <td valign="center" align="center">
+              <img src="/images/power.png" width=96 height=96 id="power" />
+              <br />
+              <br />
+              <img src="/images/volume_up.png" width=96 height=96 id="volume_up" />
+              <br />
+              VOL
+              <br />
+              <img src="/images/volume_down.png" width=96 height=96 id="volume_down" />
+              <br />
+            </td>
+            <td>
+              <table>
+                <tr>
+                  <td></td>
+                  <td><img src="/images/up.png" width=96 height=96 id="up" /></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img src="/images/left.png" width=96 height=96 id="left" /></td>
+                  <td><img src="/images/playpause.png" width=96 height=96 id="playpause" /></td>
+                  <td><img src="/images/right.png" width=96 height=96 id="right" /></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><img src="/images/down.png" width=96 height=96 id="down" /></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><img src="/images/menu_up.png" width=96 height=96 id="menu_up" /></td>
+                  <td></td>
+                  <td><img src="/images/menu_down.png" width=96 height=96 id="menu_down" /></td>
+                </tr>
+              </table>
+            </td>
+            <td valign="center" align="center" width=120>
+              <img src="/images/appletv.png" width=96 height=96 id="appletv" />
+              <br />
+              <br />
+              <img src="/images/chromecast.png" width=96 height=96 id="chromecast" />
+              <br />
+              <br />
+              <img src="/images/turntable.png" width=96 height=96 id="turntable" />
+              <br />
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+<script>
+
+  // http://stackoverflow.com/questions/1772179/get-character-value-from-keycode-in-javascript-then-trim
+  var keyboardMap = ["","","","cancel","","","help","","back_space","tab","","","clear","enter","return","","shift","control","alt","pause","caps_lock","kana","eisu","junja","final","hanja","","escape","convert","nonconvert","accept","modechange","space","page_up","page_down","end","home","left","up","right","down","select","print","execute","printscreen","insert","delete","","0","1","2","3","4","5","6","7","8","9",":",";","<","=",">","?","@","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","win","","context_menu","","sleep","numpad0","numpad1","numpad2","numpad3","numpad4","numpad5","numpad6","numpad7","numpad8","numpad9","multiply","add","separator","subtract","decimal","divide","f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","f13","f14","f15","f16","f17","f18","f19","f20","f21","f22","f23","f24","","","","","","","","","num_lock","scroll_lock","win_oem_fj_jisho","win_oem_fj_masshou","win_oem_fj_touroku","win_oem_fj_loya","win_oem_fj_roya","","","","","","","","","","circumflex","exclamation","double_quote","hash","dollar","percent","ampersand","underscore","open_paren","close_paren","asterisk","+","|","-","{","}","~","","","","","volume_mute","volume_down","volume_up","","","","+/=",",","-",".","/","back_quote","","","","","","","","","","","","","","","","","","","","","","","","","","","[","\\","]","\"","","meta","altgr","","win_ico_help","win_ico_00","","win_ico_clear","","","win_oem_reset","win_oem_jump","win_oem_pa1","win_oem_pa2","win_oem_pa3","win_oem_wsctrl","win_oem_cusel","win_oem_attn","win_oem_finish","win_oem_copy","win_oem_auto","win_oem_enlw","win_oem_backtab","attn","crsel","exsel","ereof","play","zoom","","pa1","win_oem_clear",""];
+
+  var keyMap = {
+    27: 'power', // escape
+    187: 'volume_up', // equals / plus
+    189: 'volume_down', // hyphen / underscore
+
+    37: 'left', // left
+    38: 'up', // up
+    39: 'right', // right
+    40: 'down', // down
+
+    13: 'playpause', // return
+
+    220: 'menu_down', // "\"
+    16: 'menu_up', // right shift
+
+    49: 'appletv', // 1
+    50: 'chromecast', // 2
+    51: 'turntable', // 3
+  };
+
+  var apiMap = {
+    'power': 'tv_power',
+    'volume_up': 'audio_up',
+    'volume_down': 'audio_down',
+
+    'left': 'appletv_left',
+    'up': 'appletv_up',
+    'right': 'appletv_right',
+    'down': 'appletv_down',
+
+    'playpause': 'appletv_select',
+
+    'menu_down': 'appletv_play',
+    'menu_up': 'appletv_menu',
+
+    'appletv': 'switch_appletv',
+    'chromecast': 'switch_chromecast',
+    'turntable': 'audio_1',
+  };
+
+  var reverseKeyMap = {}
+  for (var key in keyMap) {
+    reverseKeyMap[keyMap[key]] = key;
+  }
+
+  var runCommand = function(command) {
+    console.log('Command: ' + command);
+    var apiCommand = apiMap[command];
+    if (apiCommand == null) {
+      console.log('Command not found: ' + command);
+      return;
+    }
+    var highlight = document.getElementById(command);
+    if (highlight == null) {
+      console.log('Highlight element not found: ' + command);
+      return;
+    }
+    if (!isVisible(highlight)) {
+      console.log('Ignoring invisible button: ' + command);
+      return;
+    }
+    console.log('API command: ' + apiCommand);
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/ifttt/v1/actions/" + apiCommand);
+    xhttp.send();
+    highlight.classList.add('highlight');
+    window.setTimeout(function(){highlight.classList.remove('highlight')}, 200);
+  }
+
+  var checkKey = function(e) {
+    e = e || window.event;
+    console.log(e.keyCode);
+    if (keyMap[e.keyCode] != undefined) {
+      command = keyMap[e.keyCode];
+      runCommand(command);
+    }
+  }
+
+  var checkClick = function(e) {
+    e = e || window.event;
+    var target = e.toElement;
+    while (target != null) {
+      command = target.id;
+      if (reverseKeyMap[command] != undefined) {
+        runCommand(command);
+        break
+      }
+      target = target.parentNode;
+    }
+  }
+
+  function isVisible(target) {
+    if (target == null) {
+      return null;
+    }
+    while (target != null) {
+      if (target.style.display == "none" || target.style.display == "None") {
+        return false;
+      }
+      target = target.parentElement;
+    }
+    return true;
+  }
+
+  document.onkeydown = checkKey;
+  document.onclick = checkClick;
+
+  for (i = 0 ; i < document.all.length ; ++i) {
+    var elem = document.all[i];
+    var keyCode = reverseKeyMap[elem.id];
+    if (keyCode != null) {
+      elem.title = keyboardMap[keyCode];
+    }
+  }
+
+</script>
+</html>
