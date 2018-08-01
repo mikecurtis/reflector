@@ -14,7 +14,7 @@ const server = express()
 	.use(express.static('static'))
 	.use('/', express.static('/static/index.html'))
 	// Status request.
-	.post(API_PREFIX + '/status', function (req, res) {
+	.get(API_PREFIX + '/status', function (req, res) {
 		writeReply(res, 200, {});
 	})
 	// Action request.
