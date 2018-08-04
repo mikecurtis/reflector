@@ -1,6 +1,7 @@
 'use strict';
 
 const PORT = process.env.PORT || 5000;
+const DEBUG = process.env.DEBUG || false;
 const express = require('express');
 const API_PREFIX = '/ifttt/v1';
 
@@ -19,6 +20,9 @@ const server = express()
 	})
 	// Action request.
 	.post(API_PREFIX + '/actions/:action', function (req, res) {
+		if (DEBUG) {
+			console.log(req);
+		}
 		var action = req.params.action
 		wss.clients.forEach((client) => {
 			console.log('Forward command "' + action + '" to client: ' + client.id);
