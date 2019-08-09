@@ -48,13 +48,15 @@
               </table>
             </td>
             <td valign="center" align="center" width=120>
-              <img src="/images/appletv.png" width=96 height=96 id="appletv" />
+              <img src="/images/appletv.png" width=80 height=80 id="appletv" />
               <br />
-              <img src="/images/chromecast.png" width=96 height=96 id="chromecast" />
+              <img src="/images/chromecast.png" width=80 height=80 id="chromecast" />
               <br />
-              <img src="/images/turntable.png" width=96 height=96 id="turntable" />
+              <img src="/images/lightning.png" width=80 height=80 id="lightning" />
               <br />
-              <img src="/images/looper.png" width=96 height=96 id="looper" />
+              <img src="/images/turntable.png" width=80 height=80 id="turntable" />
+              <br />
+              <img src="/images/looper.png" width=80 height=80 id="looper" />
 	      <br />
             </td>
           </tr>
@@ -87,8 +89,9 @@
 
     49: 'appletv', // 1
     50: 'chromecast', // 2
-    51: 'turntable', // 3
-    52: 'looper', // 4
+    51: 'lightning', // 2
+    52: 'turntable', // 3
+    53: 'looper', // 4
   };
 
   var apiMap = {
@@ -108,6 +111,7 @@
 
     'appletv': 'switch_appletv',
     'chromecast': 'switch_chromecast',
+    'lightning': 'switch_lightning',
     'turntable': 'audio_1',
     'looper': 'audio_4',
   };
